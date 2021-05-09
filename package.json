@@ -1,0 +1,23 @@
+{
+  "name": "nextjs",
+  "version": "4.0.0",
+  "private": true,
+  "dependencies": {
+    "@hookform/resolvers": "^2.4.0",
+    "@material-ui/core": "latest",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "clsx": "latest",
+    "next": "latest",
+    "prop-types": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.4.2",
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+  }
+}
