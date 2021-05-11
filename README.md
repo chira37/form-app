@@ -12,7 +12,7 @@ cd nextjs
 Install it and run:
 
 ```sh
-yarb
+yarn
 yarn dev
 ```
 
