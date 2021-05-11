@@ -1,29 +1,43 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 import { search } from "./search";
 
 export const useSearchAddress = () => {
     const [options, setOptions] = useState([]);
-    const [laoding, setLaoding] = useState(false);
+    const [countryList, setContryList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [searchText, setSearchText] = useState(null);
+    const [countryCode, setCountryCode] = useState("auto");
+
+    useEffect(() => {
+        axios
+            .get("https://restcountries.eu/rest/v2/all")
+            .then((res) => {
+                const list = res.data.map((value) => ({
+                    name: value.name,
+                    countryCode: value.alpha2Code.toLowerCase(),
+                }));
+                setContryList(list);
+            })
+            .catch(() => setContryList([]));
+    }, []);
 
     useEffect(() => {
         if (searchText === null || searchText.length < 5) return;
 
-        setLaoding(true);
+        setLoading(true);
 
-        search(
-            `https://api.geoapify.com/v1/geocode/autocomplete?text=${searchText}&apiKey=bf0cfe45ea014b5ab6b22c3b84e2e515`
-        )
+        search("https://api.geoapify.com/v1/geocode/autocomplete", searchText, countryCode)
             .then((res) => {
-                setLaoding(false);
+                setLoading(false);
                 setOptions(res.data.features);
             })
             .catch(() => {
-                setLaoding(false);
+                setLoading(false);
                 setOptions([]);
             });
     }, [searchText]);
 
-    return { options, laoding, setSearchText };
+    return { options, countryList, loading, setSearchText, setCountryCode };
 };

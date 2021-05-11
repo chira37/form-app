@@ -1,10 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { orderDetailsSchema } from "./../utils/schemas";
+import { useSelector, useDispatch } from "react-redux";
+import { sendOrderDetails } from "@store/slices/orderSlice";
 
 import _ from "lodash";
 
 export const useOrderDetails = () => {
+    const dispatch = useDispatch();
+
+    const { loading } = useSelector((state) => state.order);
+
     const {
         handleSubmit,
         control,
@@ -16,8 +22,15 @@ export const useOrderDetails = () => {
 
     // auto complete the address values
     const setAddressValues = (values) => {
-        _.map(values, (value, key) => setValue(key, value));
+        _.map(values, (value, key) => setValue(key, value, { shouldValidate: true, shouldDirty: false }));
     };
 
-    return { handleSubmit, control, setAddressValues, errors };
+    const send = (data) => {
+        const userDetails = _.pick(data, ["firstName", "lastName", "email", "telephone"]);
+        const addressDetails = _.pick(data, ["country", "adrressLine1", "adrressLine2", "city", "state", "postcode", "interest"]);
+
+        dispatch(sendOrderDetails({ userDetails, addressDetails }));
+    };
+
+    return { handleSubmit, control, setAddressValues, send, formErrors: errors, loading };
 };

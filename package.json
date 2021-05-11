@@ -5,7 +5,9 @@
   "dependencies": {
     "@hookform/resolvers": "^2.4.0",
     "@material-ui/core": "latest",
+    "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "clsx": "latest",
     "next": "latest",
@@ -13,6 +15,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.4.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
     "yup": "^0.32.9"
   },
   "scripts": {
